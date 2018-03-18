@@ -5,7 +5,8 @@ const { Schema } = mongoose;
 const cacheSchema = new Schema({
   key: {
     type: String,
-    required: true
+    required: true,
+    index: true
   },
   value: {
     type: String,
