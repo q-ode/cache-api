@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 // Initialize MongoDB Connection
-const mongoDBUrl = process.env.MONGODB_URL;
+const mongoDBUrl = process.env.MONGODB_URL || 'mongodb://127.0.0.1/cache_db';
 mongoose.connect(mongoDBUrl);
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;

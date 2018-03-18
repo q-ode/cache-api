@@ -1,8 +1,26 @@
 # CacheAPI
 
-## Brief Description
-
 ## Features
+- Return cached data
+- Remove cached data
+- Remove all cached data
+- Fetch all cached data
+
+## API Endpoints
+
+**Response Format: **
+```
+{ key: <cache key>, value: <cache value }
+
+```
+| **HTTP Verb** | **Endpoint** | **Functionality**|
+|------|-------|-----------------|
+| **POST** | /cache | Creates a cache record |
+| **GET** | /cache/:key | Gets a cache record by key |
+| **GET** | /cache | Gets all cache records |
+| **DELETE** | /cache/:key | Deletes a cache record by key |
+| **DELETE** | /cache | Deletes all cache records |
+
 
 ## Commit Conventions
 
@@ -23,3 +41,11 @@ fix (bug fix)
 test (when adding missing tests)
 chore (maintain)
 ```
+
+## Deviations
+- Yarn instead of NPM was used as I've found it to be much more stable based on the lock file.
+
+## Known Bugs:
+- Model replacement based on limit seems to be failing and there's no more time to investigate.
+- Uncertain about what's ecpected from TTL so it's not been implemented yet.
+- Versioning hasn't been implemented
