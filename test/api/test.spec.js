@@ -6,12 +6,13 @@ chai.use(chaiHttp);
 
 const expect = chai.expect;
 
-describe('API Root', () => {
-  it('works as expected', (done) => {
+describe('CacheAPI Root', () => {
+  it('works, as expected', (done) => {
     chai.request(app)
       .get('/')
-      .then((res) => {
+      .end((err, res) => {
         expect(res).to.have.status(200);
+        expect(res.body.message).to.equal('CacheAPI V1.0');
         done();
       });
   });
