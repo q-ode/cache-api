@@ -1,6 +1,7 @@
 const app = require('../../config/app'),
   chai = require('chai'),
   chaiHttp = require('chai-http');
+const random = require('random-string');
 
 chai.use(chaiHttp);
 
@@ -61,5 +62,35 @@ describe('CacheAPI', () => {
           done();
         });
     });
+  });
+
+  describe('Save', () => {
+    it('saves a record in the cache', (done) => {
+      chai.request(app)
+        .post('/cache')
+        .send({ key: random({ length: 10 }), value: random({ length: 100 }) })
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          done();
+        });
+    });
+
+    it('doesn\'t save a record when a parameter is missing', (done) => {
+      chai.request(app)
+        .post('/cache')
+        .send({ key: random({ length: 10 }) })
+        .end((err, res) => {
+          expect(res).to.have.status(401);
+        });
+
+      chai.request(app)
+        .post('/cache')
+        .send({ value: random({ length: 100 }) })
+        .end((err, res) => {
+          expect(res).to.have.status(401);
+          done();
+        });
+    });
+
   });
 });

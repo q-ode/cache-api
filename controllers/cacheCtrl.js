@@ -32,7 +32,7 @@ const cacheCtrl = {
         log.error('Cache miss');
 
         const value = random(randomDataProp);
-        Cache.create({ key, value }, (err, data) => {
+        Cache.create({ key, value }).then((data) => {
           return res.send({ key, value: data.value });
         });
       }
@@ -42,7 +42,7 @@ const cacheCtrl = {
   /**
    * Get all the records from the cache
    *
-   * @param req - HTTP Request containing the key
+   * @param req - HTTP Request
    * @param res - HTTP Response
    *
    * @return Array - all cache records
@@ -56,6 +56,27 @@ const cacheCtrl = {
 
       return res.send(totalCache);
     });
+  },
+
+  /**
+   * Creates a cache key with the value or updates it if already exists.
+   *
+   * @param req - HTTP Request containing the key and value
+   * @param res - HTTP Response
+   *
+   * @return Object - cache record for given key
+   */
+  save(req, res) {
+    const key = req.body.key;
+    const value = req.body.value;
+
+    if (!key || !value || key === '' || value === '') {
+      res.status(401).send({ message: 'Invalid parameters.' });
+    } else {
+      Cache.create({ key, value }).then((data) => {
+        return res.send({ key, value: data.value });
+      });
+    }
   }
 };
 
