@@ -50,4 +50,16 @@ describe('CacheAPI', () => {
         });
     });
   });
+
+  describe('GetAll', () => {
+    it('retrieves all records in the cache', (done) => {
+      chai.request(app)
+        .get('/cache')
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body.length).to.equal(2);
+          done();
+        });
+    });
+  });
 });
