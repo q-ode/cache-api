@@ -46,6 +46,5 @@ chore (maintain)
 - Yarn instead of NPM was used as I've found it to be much more stable based on the lock file.
 
 ## Known Bugs:
-- Model replacement based on limit seems to be failing and there's no more time to investigate.
-- Uncertain about what's ecpected from TTL so it's not been implemented yet.
-- Versioning hasn't been implemented
+- Uncertain about what's expected from TTL so it's not been implemented yet.
+- API Versioning hasn't been implemented
