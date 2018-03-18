@@ -35,7 +35,7 @@ app.use((err, req, res, next) => {
 
   // render the error page
   res.status(err.status || 500);
-  res.send('error');
+  res.send({ message: 'Not found.' });
 });
 
 module.exports = app;

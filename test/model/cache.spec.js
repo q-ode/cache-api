@@ -42,4 +42,13 @@ describe('Cache Model', () => {
       });
     });
   });
+
+  describe('RemoveOne', () => {
+    it('deletes a record based on a key', (done) => {
+      Cache.remove({ key: 'dummy' }, (err, data) => {
+        expect(data.n).to.be.equal(1);
+        done();
+      });
+    });
+  });
 });

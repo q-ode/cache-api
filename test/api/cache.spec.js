@@ -80,14 +80,35 @@ describe('CacheAPI', () => {
         .post('/cache')
         .send({ key: random({ length: 10 }) })
         .end((err, res) => {
-          expect(res).to.have.status(401);
+          expect(res).to.have.status(400);
         });
 
       chai.request(app)
         .post('/cache')
         .send({ value: random({ length: 100 }) })
         .end((err, res) => {
-          expect(res).to.have.status(401);
+          expect(res).to.have.status(400);
+          done();
+        });
+    });
+
+  });
+
+  describe('Remove', () => {
+    it('deletes a record by key as expected', (done) => {
+      chai.request(app)
+        .delete('/cache/john')
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          done();
+        });
+    });
+
+    it('returns an error if they record isn\'t found', (done) => {
+      chai.request(app)
+        .delete('/cache/john')
+        .end((err, res) => {
+          expect(res).to.have.status(404);
           done();
         });
     });

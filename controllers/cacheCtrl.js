@@ -71,10 +71,32 @@ const cacheCtrl = {
     const value = req.body.value;
 
     if (!key || !value || key === '' || value === '') {
-      res.status(401).send({ message: 'Invalid parameters.' });
+      res.status(400).send({ message: 'Invalid parameters.' });
     } else {
       Cache.create({ key, value }).then((data) => {
         return res.send({ key, value: data.value });
+      });
+    }
+  },
+
+  /**
+   * Removes a cache record based on the given key.
+   *
+   * @param req - HTTP Request containing the key
+   * @param res - HTTP Response
+   */
+  remove(req, res) {
+    const key = req.params.key;
+
+    if (!key || key === '') {
+      res.status(400).send({ message: 'Invalid parameters.' });
+    } else {
+      Cache.remove({ key }).then((data) => {
+        if (data.n === 1) {
+          res.send({ message: 'Record deleted.' });
+        } else {
+          res.status(404).send({ message: 'Record not found.' });
+        }
       });
     }
   }
