@@ -93,12 +93,24 @@ const cacheCtrl = {
     } else {
       Cache.remove({ key }).then((data) => {
         if (data.n === 1) {
-          res.send({ message: 'Record deleted.' });
+          return res.send({ message: 'Record deleted.' });
         } else {
-          res.status(404).send({ message: 'Record not found.' });
+          return res.status(404).send({ message: 'Record not found.' });
         }
       });
     }
+  },
+
+  /**
+   * Removes all records in the cache.
+   *
+   * @param req - HTTP Request containing the key
+   * @param res - HTTP Response
+   */
+  removeAll(req, res) {
+    Cache.remove().exec(() => {
+      return res.send({ message: 'All records deleted.' })
+    });
   }
 };
 

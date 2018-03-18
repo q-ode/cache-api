@@ -114,4 +114,19 @@ describe('CacheAPI', () => {
     });
 
   });
+
+  describe('RemoveAll', () => {
+    it('deletes all records expected', (done) => {
+      chai.request(app)
+        .delete('/cache')
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+
+          Cache.count({}, (err, count) => {
+            expect(count).to.be.equal(0);
+            done();
+          });
+        });
+    });
+  });
 });
