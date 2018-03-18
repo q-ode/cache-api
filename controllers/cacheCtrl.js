@@ -1,8 +1,11 @@
+require('dotenv').config();
 const Log = require('log'),
   log = new Log('info');
 const random = require('random-string');
 
 const Cache = require('../models/cache');
+
+const cacheFacade = require('../facades/cacheFacade');
 
 const randomDataProp = { length: 100 };
 
@@ -10,6 +13,7 @@ const randomDataProp = { length: 100 };
  * The controller for the Cache resource
  */
 const cacheCtrl = {
+  limit: 3,
   /**
    * Get a single cache record by the key, if the key doesn't exist,
    * it creates a random value, updates the cache with the key specified
@@ -32,7 +36,8 @@ const cacheCtrl = {
         log.error('Cache miss');
 
         const value = random(randomDataProp);
-        Cache.create({ key, value }).then((data) => {
+
+        cacheFacade.saveOrOverriteRecord({ key, value }, this.limit, (data) => {
           return res.send({ key, value: data.value });
         });
       }
@@ -73,7 +78,7 @@ const cacheCtrl = {
     if (!key || !value || key === '' || value === '') {
       res.status(400).send({ message: 'Invalid parameters.' });
     } else {
-      Cache.create({ key, value }).then((data) => {
+      cacheFacade.saveOrOverriteRecord({ key, value }, this.limit, (data) => {
         return res.send({ key, value: data.value });
       });
     }
